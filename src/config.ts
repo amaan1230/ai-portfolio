@@ -5,9 +5,9 @@ export const siteConfig = {
   accentColor: "#00f3ff",
   social: {
     email: "ansariamaansa0987@gmail.com",
-    linkedin: "https://linkedin.com/",
+    linkedin: "https://www.linkedin.com/in/amaan-ansariii/",
     twitter: "https://x.com/",
-    github: "https://github.com/",
+    github: "https://github.com/amaan1230",
   },
   aboutMe:
     "AI and ML Engineer and Data Scientist with a strong focus on Generative AI, Machine Learning, and Data Science. Experienced in full-stack development with Python frameworks like FastAPI and Streamlit, and proficient in building scalable AI-driven applications. Proven track record of delivering high-quality code, optimizing performance, and successfully executing complex projects from concept to deployment.",
