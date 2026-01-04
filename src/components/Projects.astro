@@ -1,0 +1,114 @@
+---
+import { siteConfig } from "../config";
+const hasProjects = siteConfig.projects && siteConfig.projects.length > 0;
+---
+
+{
+  hasProjects && (
+    <section id="projects" class="p-8 sm:p-12 md:p-16 lg:p-24">
+      <div>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start">
+          <div class="lg:col-span-4">
+            <h2 class="text-3xl sm:text-4xl md:text-5xl xl:text-7xl font-bold text-ai-text font-orbitron">
+              Projects
+            </h2>
+            <div
+              class="w-[75px] h-[5px] mt-2 rounded-full box-glow"
+              style={`background-color: ${siteConfig.accentColor}`}
+            />
+          </div>
+
+          <div class="lg:col-span-8">
+            <div class="space-y-8">
+              {siteConfig.projects.map((project, index) => (
+                <div class="group relative animate-on-scroll">
+                  <div
+                    class="block relative p-4 sm:p-6 md:p-8 bg-ai-card rounded-xl sm:rounded-2xl border border-ai-border transition-all duration-300 hover:bg-ai-card-hover hover:border-glow hover:-translate-y-1"
+                  >
+                    <div class="absolute top-4 right-4 sm:top-6 sm:right-6 md:top-8 md:right-8 flex gap-3 z-10">
+                      {project.github && (
+                        <a
+                          href={project.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label="GitHub Source"
+                          class="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 flex items-center justify-center bg-ai-bg border border-ai-border rounded-full text-ai-text transition-all duration-300 hover:bg-ai-primary hover:text-black hover:border-transparent hover:scale-105"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="w-5 h-5 sm:w-6 sm:h-6"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          >
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+                          </svg>
+                        </a>
+                      )}
+                      
+                      {project.link && (
+                        <a
+                          href={project.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label="Live Demo"
+                          class="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 flex items-center justify-center bg-ai-primary rounded-full text-black transition-all duration-300 hover:bg-ai-secondary hover:text-white hover:scale-105 shadow-lg box-glow"
+                        >
+                          <svg
+                            class="w-4 h-4 sm:w-4.5 sm:h-4.5 md:w-5 md:h-5"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M7 17L17 7M17 7H7M17 7V17"
+                            />
+                          </svg>
+                        </a>
+                      )}
+                    </div>
+
+                    <div class="space-y-4">
+                      <div>
+                        <span
+                          class="text-sm font-mono text-glow"
+                          style={{ color: siteConfig.accentColor }}
+                        >
+                          0{index + 1}
+                        </span>
+                        <h3 class="text-xl sm:text-2xl font-bold text-ai-text mt-1 font-orbitron">
+                          {project.name}
+                        </h3>
+                      </div>
+
+                      <p class="text-base sm:text-lg text-ai-text-muted leading-relaxed pr-12 sm:pr-14 md:pr-16 lg:pr-24 font-rajdhani">
+                        {project.description}
+                      </p>
+
+                      {project.skills && project.skills.length > 0 && (
+                        <div class="flex flex-wrap gap-1.5 sm:gap-2 pt-2">
+                          {project.skills.map((skill) => (
+                            <span class="px-2.5 sm:px-3 py-1 sm:py-1.5 bg-ai-bg/50 border border-ai-border text-ai-text rounded-md sm:rounded-lg text-xs sm:text-sm font-medium transition-all duration-300 hover:bg-ai-primary/10 hover:border-ai-primary/30">
+                              {skill}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}

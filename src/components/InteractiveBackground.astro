@@ -1,0 +1,106 @@
+---
+---
+<canvas id="neural-bg" class="fixed inset-0 w-full h-full -z-50 pointer-events-none opacity-40"></canvas>
+
+<script>
+  const canvas = document.getElementById('neural-bg');
+  const ctx = canvas.getContext('2d');
+  
+  let width = canvas.width = window.innerWidth;
+  let height = canvas.height = window.innerHeight;
+  
+  window.addEventListener('resize', () => {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+  });
+
+  class Particle {
+    constructor() {
+      this.x = Math.random() * width;
+      this.y = Math.random() * height;
+      this.vx = (Math.random() - 0.5) * 0.5;
+      this.vy = (Math.random() - 0.5) * 0.5;
+      this.size = Math.random() * 2 + 1;
+    }
+
+    update() {
+      this.x += this.vx;
+      this.y += this.vy;
+
+      if (this.x < 0 || this.x > width) this.vx *= -1;
+      if (this.y < 0 || this.y > height) this.vy *= -1;
+    }
+
+    draw() {
+      ctx.fillStyle = '#00f3ff';
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  const particles = [];
+  const particleCount = Math.min(window.innerWidth / 10, 100); // Responsive count
+
+  for (let i = 0; i < particleCount; i++) {
+    particles.push(new Particle());
+  }
+
+  const mouse = { x: null, y: null, radius: 150 };
+
+  window.addEventListener('mousemove', (event) => {
+    mouse.x = event.x;
+    mouse.y = event.y;
+  });
+
+  function animate() {
+    ctx.clearRect(0, 0, width, height);
+    
+    // Draw connections
+    for (let i = 0; i < particles.length; i++) {
+        let p = particles[i];
+        
+        // Interaction with mouse
+        let dxMouse = mouse.x - p.x;
+        let dyMouse = mouse.y - p.y;
+        let distanceMouse = Math.sqrt(dxMouse*dxMouse + dyMouse*dyMouse);
+        
+        if (distanceMouse < mouse.radius) {
+            // Move particle away from mouse slightly for fluid effect
+            if (mouse.x < p.x && p.x < width - 10) p.x += 2;
+            if (mouse.x > p.x && p.x > 10) p.x -= 2;
+            if (mouse.y < p.y && p.y < height - 10) p.y += 2;
+            if (mouse.y > p.y && p.y > 10) p.y -= 2;
+
+            // Draw line to mouse
+             ctx.strokeStyle = `rgba(0, 243, 255, ${1 - distanceMouse / mouse.radius})`;
+             ctx.lineWidth = 1;
+             ctx.beginPath();
+             ctx.moveTo(p.x, p.y);
+             ctx.lineTo(mouse.x, mouse.y);
+             ctx.stroke();
+        }
+
+        for (let j = i + 1; j < particles.length; j++) {
+            const dx = particles[i].x - particles[j].x;
+            const dy = particles[i].y - particles[j].y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance < 150) {
+                ctx.strokeStyle = `rgba(0, 243, 255, ${1 - distance / 150})`;
+                ctx.lineWidth = 0.5;
+                ctx.beginPath();
+                ctx.moveTo(particles[i].x, particles[i].y);
+                ctx.lineTo(particles[j].x, particles[j].y);
+                ctx.stroke();
+            }
+        }
+        particles[i].update();
+        particles[i].draw();
+    }
+
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+</script>

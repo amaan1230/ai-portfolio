@@ -1,0 +1,155 @@
+---
+import { siteConfig } from "../config";
+---
+
+    <section id="about" class="py-20 lg:py-32 relative overflow-hidden">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-ai-text font-orbitron mb-12 flex items-center gap-4">
+                    <span class="text-ai-primary">#</span> About_Me
+                    <span class="text-sm font-mono font-normal text-ai-text-muted mt-2 ml-auto hidden sm:block">
+                        running: <span class="text-green-400">assistant_v2.py</span>
+                    </span>
+                </h2>
+
+                <!-- Chat Interface Moved Here -->
+                <div class="bg-ai-card/80 backdrop-blur-md rounded-xl border border-ai-border shadow-2xl overflow-hidden box-glow animate-fade-in">
+                    <!-- Window Controls -->
+                    <div class="bg-ai-bg/90 p-3 border-b border-ai-border flex items-center gap-2">
+                        <div class="w-3 h-3 rounded-full bg-red-500/50"></div>
+                        <div class="w-3 h-3 rounded-full bg-yellow-500/50"></div>
+                        <div class="w-3 h-3 rounded-full bg-green-500/50"></div>
+                        <span class="ml-4 text-xs font-mono text-ai-text-muted">model: gem-ai-v1.5-pro</span>
+                    </div>
+
+                    <!-- Chat Area -->
+                    <div class="p-6 h-[400px] sm:h-[500px] overflow-y-auto font-mono text-sm sm:text-base flex flex-col gap-6">
+                        
+                        <!-- User Message -->
+                        <div class="flex gap-4 animate-fade-in animation-delay-200">
+                            <div class="w-8 h-8 rounded bg-ai-secondary/20 flex items-center justify-center text-ai-secondary font-bold shrink-0">U</div>
+                            <div class="text-ai-text bg-ai-bg/50 p-4 rounded-r-xl rounded-bl-xl border border-ai-border/50 max-w-[85%]">
+                                <span class="text-ai-secondary font-bold text-xs uppercase block mb-1">Prompt</span>
+                                Tell me about yourself. What are your core competencies?
+                            </div>
+                        </div>
+
+                        <!-- AI Thinking -->
+                        <div id="ai-thinking" class="flex gap-4 animate-pulse hidden">
+                            <div class="w-8 h-8 rounded bg-ai-primary/20 flex items-center justify-center text-ai-primary font-bold shrink-0">AI</div>
+                            <div class="flex items-center gap-1 mt-2">
+                                <div class="w-1.5 h-1.5 bg-ai-primary rounded-full animate-bounce"></div>
+                                <div class="w-1.5 h-1.5 bg-ai-primary rounded-full animate-bounce delay-100"></div>
+                                <div class="w-1.5 h-1.5 bg-ai-primary rounded-full animate-bounce delay-200"></div>
+                            </div>
+                        </div>
+
+                        <!-- AI Response -->
+                        <div id="ai-response" class="flex gap-4 hidden">
+                            <div class="w-8 h-8 rounded bg-ai-primary/20 flex items-center justify-center text-ai-primary font-bold shrink-0">AI</div>
+                            <div class="text-ai-text-muted bg-ai-primary/5 p-4 rounded-r-xl rounded-tl-xl border border-ai-primary/10 w-full">
+                                <span class="text-ai-primary font-bold text-xs uppercase block mb-1">Response</span>
+                                <div id="typewriter-content" class="leading-relaxed"></div><span class="animate-blink border-r-2 border-ai-primary ml-1">&nbsp;</span>
+                                
+                                <!-- Skills as 'RAG Context' -->
+                                <div class="mt-6 pt-4 border-t border-ai-primary/10">
+                                    <p class="text-[10px] uppercase tracking-widest text-ai-primary mb-2">Retrieved Context / Skills:</p>
+                                    <div class="flex flex-wrap gap-2">
+                                        {siteConfig.skills.map(skill => (
+                                            <span class="text-xs px-2 py-1 bg-ai-bg border border-ai-border rounded text-ai-text-muted">
+                                                {skill}
+                                            </span>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <!-- RAG Usage badge -->
+                                <div class="mt-4 flex gap-2">
+                                    <span class="text-[10px] px-2 py-1 bg-ai-card border border-ai-border rounded text-ai-text-muted flex items-center gap-1">
+                                        <span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span> RAG Active
+                                    </span>
+                                    <span class="text-[10px] px-2 py-1 bg-ai-card border border-ai-border rounded text-ai-text-muted flex items-center gap-1">
+                                        <span class="w-1.5 h-1.5 bg-blue-500 rounded-full"></span> Vector DB
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Input Area (Simulated) -->
+                    <div class="p-4 border-t border-ai-border bg-ai-bg/50">
+                        <div class="flex gap-2">
+                            <div class="flex-grow bg-ai-bg border border-ai-border rounded h-12 px-4 flex items-center text-ai-text-muted text-sm opacity-50 cursor-not-allowed font-mono">
+                                Waiting for system response...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script define:vars={{ name: siteConfig.name, bio: siteConfig.aboutMe }}>
+            // Only run if elements exist
+            const thinkingEl = document.getElementById('ai-thinking');
+            const responseEl = document.getElementById('ai-response');
+            const writerContent = document.getElementById('typewriter-content');
+            
+            if (thinkingEl && responseEl && writerContent) {
+                // Modified bio for effect
+                const fullText = bio; // Use the config bio directly or modify it
+                
+                // Intersection Observer to trigger when visible
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            startChat();
+                            observer.disconnect(); // Only run once
+                        }
+                    });
+                }, { threshold: 0.3 });
+                
+                observer.observe(document.getElementById('about'));
+
+                function startChat() {
+                    setTimeout(() => {
+                        thinkingEl.classList.remove('hidden');
+                    }, 500);
+
+                    setTimeout(() => {
+                        thinkingEl.classList.add('hidden');
+                        responseEl.classList.remove('hidden');
+                        typeWriter(fullText);
+                    }, 2000);
+                }
+
+                function typeWriter(text) {
+                    let i = 0;
+                    const speed = 20; // Faster speed for bio
+                    
+                    function type() {
+                        if (i < text.length) {
+                             if (text.charAt(i) === '\n') {
+                                writerContent.innerHTML += '<br/>';
+                            } else {
+                                writerContent.innerHTML += text.charAt(i);
+                            }
+                            i++;
+                            setTimeout(type, speed);
+                        }
+                    }
+                    type(); // Start typing
+                }
+            }
+        </script>
+
+        <style>
+            @keyframes blink {
+              0%, 100% { border-color: transparent; }
+              50% { border-color: var(--color-ai-primary); }
+            }
+            .animate-blink {
+              animation: blink 1s step-end infinite;
+            }
+        </style>
+    </section>

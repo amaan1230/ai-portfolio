@@ -1,0 +1,96 @@
+---
+import { siteConfig } from "../config";
+const hasAchievements = siteConfig.achievements && siteConfig.achievements.length > 0;
+---
+
+{
+  hasAchievements && (
+    <section id="achievements" class="p-8 sm:p-12 md:p-16 lg:p-24 border-t border-ai-border relative">
+      <div class="absolute inset-0 bg-[url('/grid.svg')] opacity-5"></div>
+        
+      <div class="max-w-7xl mx-auto relative z-10">
+        <div class="text-center mb-12 sm:mb-16 md:mb-20 animate-on-scroll">
+          <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-ai-text mb-4 flex items-center justify-center gap-3 font-orbitron">
+             Benchmarks & Certifications 🏆
+          </h2>
+          <p class="text-xs sm:text-sm md:text-base font-bold text-ai-text-muted uppercase tracking-widest font-mono">
+             [VALIDATING_MODEL_PERFORMANCE]
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {siteConfig.achievements.map((item) => (
+            <div class="bg-ai-card rounded-none clip-corner border border-ai-border p-8 flex flex-col items-center text-center hover:border-ai-primary transition-all duration-300 group hover:-translate-y-1 relative">
+              <!-- Corner decoration -->
+              <div class="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-ai-primary/50 rounded-tr-lg"></div>
+              <div class="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-ai-primary/50 rounded-bl-lg"></div>
+
+              <div class="w-16 h-16 mb-6 flex items-center justify-center bg-white rounded-xl border border-ai-border group-hover:border-ai-primary/50 transition-colors p-2">
+                {(() => {
+                  const companyLogos = {
+                    "Oracle": "https://upload.wikimedia.org/wikipedia/commons/5/50/Oracle_logo.svg",
+                    "BCG": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Boston_Consulting_Group_2020_logo.svg/800px-Boston_Consulting_Group_2020_logo.svg.png",
+                    "Databricks": "https://upload.wikimedia.org/wikipedia/commons/6/63/Databricks_Logo.png",
+                    "IBM": "https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg",
+                  };
+                  const logoSrc = item.logo || companyLogos[item.company] || null;
+                  
+                  return logoSrc ? (
+                    <img 
+                      src={logoSrc} 
+                      alt={item.company} 
+                      class="max-w-full max-h-full object-contain"
+                    />
+                  ) : (
+                    <span class="text-2xl">🏅</span>
+                  );
+                })()}
+              </div>
+
+              <h3 class="text-xl font-bold text-ai-text mb-1 leading-tight font-orbitron mt-2">
+                {item.title}
+              </h3>
+              
+              <div class="text-xs font-mono text-ai-primary mb-4 px-2 py-1 bg-ai-primary/10 rounded">
+                 ISSUER: {item.company.toUpperCase()}
+              </div>
+
+              <p class="text-ai-text-muted text-sm leading-relaxed mb-6 flex-grow font-rajdhani border-t border-b border-ai-border/30 py-4 my-2 w-full">
+                {item.description}
+              </p>
+
+              <div class="flex flex-col items-center gap-4 mt-auto w-full">
+                {item.credentialUrl && (
+                  <a 
+                    href={item.credentialUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="w-full py-2 bg-ai-text text-black text-xs font-bold font-mono tracking-wider hover:bg-ai-primary transition-all duration-300 flex items-center justify-center gap-2"
+                  >
+                    VERIFY_CREDENTIAL
+                  </a>
+                )}
+                
+                <div class="text-[10px] text-ai-text-muted font-mono opacity-60">
+                  ID: {item.credentialId ? item.credentialId : 'N/A'}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      
+      <style>
+          .clip-corner {
+              clip-path: polygon(
+                  0 0, 
+                  100% 0, 
+                  100% calc(100% - 20px), 
+                  calc(100% - 20px) 100%, 
+                  0 100%
+              );
+          }
+      </style>
+    </section>
+  )
+}

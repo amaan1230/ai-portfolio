@@ -1,0 +1,68 @@
+---
+import { siteConfig } from "../config";
+const hasEducation = siteConfig.education && siteConfig.education.length > 0;
+---
+
+{
+  hasEducation && (
+    <section id="education" class="p-8 sm:p-12 md:p-16 lg:p-24 relative">
+       <!-- Decoration -->
+       <div class="absolute right-0 bottom-0 opacity-20 pointer-events-none">
+           <svg width="400" height="400" viewBox="0 0 400 400" fill="none">
+               <circle cx="400" cy="400" r="300" stroke="#00f3ff" stroke-width="1" stroke-dasharray="10 10" />
+               <circle cx="400" cy="400" r="200" stroke="#7000ff" stroke-width="1" stroke-dasharray="5 5" />
+           </svg>
+       </div>
+
+      <div>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start">
+          <div class="lg:col-span-4">
+            <h2 class="text-3xl sm:text-4xl md:text-5xl xl:text-7xl font-bold text-ai-text font-orbitron">
+              Knowledge Base
+              <span class="block text-xl text-ai-primary mt-2 font-mono tracking-wide">&lt;Ingestion_Pipeline&gt;</span>
+            </h2>
+          </div>
+
+          <div class="lg:col-span-8">
+            <div class="space-y-8">
+              {siteConfig.education.map((edu, idx) => (
+                <div class="bg-ai-card rounded-lg border border-ai-border p-6 relative overflow-hidden group hover:border-ai-primary transition-colors">
+                  <!-- Index Number -->
+                  <div class="absolute -right-4 -top-6 text-[100px] font-bold text-ai-bg/50 font-orbitron select-none">
+                      {idx + 1}
+                  </div>
+
+                  <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-4 relative z-10">
+                    <div>
+                      <h3 class="text-lg sm:text-xl font-bold text-ai-text font-orbitron flex items-center gap-2">
+                        {edu.degree}
+                      </h3>
+                      <p class="text-base sm:text-lg font-medium text-ai-primary mt-1 font-mono">
+                        source: {edu.school}
+                      </p>
+                    </div>
+                    <span class="text-xs sm:text-sm text-ai-secondary border border-ai-secondary/30 px-2 py-1 rounded mt-2 sm:mt-0 font-mono bg-ai-secondary/5">
+                      {edu.dateRange}
+                    </span>
+                  </div>
+
+                  <div class="bg-ai-bg/50 p-4 rounded border border-ai-border/50 relative z-10">
+                      <p class="text-xs text-ai-text-muted font-mono mb-2 uppercase">Extracted Features:</p>
+                      <ul class="space-y-1">
+                        {edu.achievements.map((achievement) => (
+                          <li class="flex items-start text-sm text-ai-text-muted font-rajdhani">
+                            <span class="text-ai-primary mr-2">➜</span>
+                            {achievement}
+                          </li>
+                        ))}
+                      </ul>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
