@@ -27,56 +27,51 @@ export const siteConfig = {
   ],
   projects: [
     {
-      name: "AI Web Scraper",
+      name: "Self-Healing RAG System (Gemini-Optimized)",
       description:
-        "Engineered a scalable data extraction system using BeautifulSoup and Scrapy. Optimized processing speeds with multi-threading and automated end-to-end pipeline to MongoDB.",
-      link: "https://github.com/amaan1230/AI-WEB-SCARPER",
-      skills: ["Python", "Scrapy", "MongoDB", "BeautifulSoup"],
+        "Built adaptive retrieval for 300+ page regulatory documents using query rewriting, dynamic top-k retrieval/reranking, and context compression, with LLM-as-a-Judge grounding checks. Benchmarks showed 45–60% fewer hallucinations, 90%+ grounded responses, 70% lower token usage, and 30% better relevance vs fixed-k baselines.",
+      link: "https://github.com/amaan1230/Self-healing-RAG-system",
+      skills: ["RAG", "Gemini", "LLM-as-a-Judge", "Reranking", "Streamlit"],
     },
     {
-      name: "AI Study Abroad Assistant",
+      name: "Credit Risk Drift Detection System",
       description:
-        "Architected a full-stack GenAI application using Google Gemini 1.5 Flash to automate study-abroad consultancy, reducing research time by 80%.",
-      link: "https://github.com/amaan1230/-AI-Study-Abroad-Assistant",
-      skills: ["GenAI", "Gemini 1.5", "NLP", "Streamlit"],
-    },
-    {
-      name: "Customer Churn Prediction",
-      description:
-        "Designed predictive models using Random Forest and XGBoost (92% accuracy). Deployed an AI-powered email recommendation bot raising engagement by 25%.",
-      link: "#",
-      skills: ["Machine Learning", "XGBoost", "Python"],
+        "Built a monitoring workflow simulating loan-application streams across 50,000+ historical records to detect model reliability degradation, using PSI and Kolmogorov–Smirnov signals with a Streamlit dashboard for drift indicators and retraining triggers.",
+      link: "https://github.com/amaan1230/Loan-Drift-Detection-System",
+      skills: ["Python", "PSI", "KS Test", "MLOps", "Streamlit"],
     },
   ],
   experience: [
+    {
+      company: "Biz Technologies IT Solutions Ltd",
+      title: "AI Engineer",
+      dateRange: "Feb '26 - Present",
+      bullets: [
+        "Designed a RAG pipeline with document ingestion, chunking, embeddings, ChromaDB vector search, adaptive retrieval, and context management for LLM-powered question answering.",
+        "Contributed to response-quality improvements; internal benchmarks indicated ~40% lower hallucination rates through stronger grounding in retrieved context.",
+        "Developed multi-agent workflows for lead generation, compliance validation, and customer engagement using LangGraph, LangChain, FastAPI, and MongoDB-backed services.",
+        "Built an AI business automation platform coordinating 3+ agents across lead generation, coaching, and compliance validation, integrating retrieval components and APIs.",
+        "Developed an AI email agent for summarizing messages, drafting responses, managing follow-ups, and scheduling meetings via secure Gmail/Outlook OAuth integration.",
+        "Collaborated with 3+ engineers on API architecture, system design, code reviews, documentation, and integration of AI capabilities into backend services.",
+      ],
+    },
     {
       company: "366digitX",
       title: "Developer",
       dateRange: "Aug '25 - Nov '25",
       bullets: [
-        "Spearheading the development of 5+ production-level web applications using FastAPI and Streamlit.",
-        "Collaborating with cross-functional teams to translate business requirements into technical specifications.",
-        "Optimizing application architecture for better performance and seamless integration with AI-driven features.",
+        "Built and maintained five web applications using FastAPI and Streamlit, supporting implementation, integration, testing, and client handoff.",
+        "Translated business requirements into technical specifications and collaborated with product and engineering stakeholders on feature delivery.",
+        "Refactored backend architecture and REST API design to improve integration stability and maintainability.",
       ],
     },
     {
-      company: "IBM SKILLBUILD",
+      company: "IBM SkillBuild",
       title: "AI & ML Intern",
       dateRange: "Jun '24 - Jul '24",
       bullets: [
-        "Engineered and optimized machine learning models using Python and IBM Watson AI (90%+ accuracy).",
-        "Synthesized raw data into actionable business insights by applying advanced data visualization techniques.",
-        "Achieved IBM-certified credentials in AI and Data Science.",
-      ],
-    },
-    {
-      company: "Visuals Lab",
-      title: "Python Developer Intern",
-      dateRange: "Dec '22 - Jan '23",
-      bullets: [
-        "Contributed to the full SDLC by executing high-quality coding, rigorous debugging, and comprehensive testing.",
-        "Partnered with senior developers to implement backend logic and feature enhancements.",
-        "Streamlined code efficiency by identifying and resolving bottlenecks during testing.",
+        "Developed regression and Random Forest models in Python using IBM Watson AI for predictive analytics tasks, achieving reported accuracy above 90%.",
+        "Prepared and analysed datasets, using statistical analysis and visualizations to communicate patterns and business-oriented findings.",
       ],
     },
   ],
